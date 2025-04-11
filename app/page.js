@@ -13,8 +13,14 @@ class ImageCanvasUploader extends Component{
 
   canvasRef = React.createRef();
 
-  componentDidUpdate = () => {
-    this.drawImageOnCanvas(this.state.image, this.state.scaleFactor, this.state.position);
+  componentDidUpdate = (_, prevStates) => {
+    if (
+      prevStates.image !== this.state.image ||
+      prevStates.scaleFactor !== this.state.scaleFactor ||
+      prevStates.position !== this.state.position
+    ){
+      this.drawImageOnCanvas(this.state.image, this.state.scaleFactor, this.state.position);
+    }
   }
 
   drawImageOnCanvas = (img, currentScale, currentPosition) => {
@@ -94,7 +100,7 @@ class ImageCanvasUploader extends Component{
     if (this.state.dragging) {
       const newX = event.nativeEvent.offsetX - this.state.dragStart.x;
       const newY = event.nativeEvent.offsetY - this.state.dragStart.y;
-      this.setState({ position: { x: newX, y: newY }});
+      this.setState({ position: { x: newX, y: newY } });
     }
   };
 
